@@ -1,0 +1,21 @@
+raw:
+  dataset: data/dataset/dataset.json
+  chunks_dir: data/chunks
+processed:
+  directory: data/processed
+  qrels_dir: data/processed/qrels
+split:
+  unit: document
+  repetitions: 10
+  seeds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  collection_documents: 72
+  dev_documents: 24
+  test_documents: 24
+  require_all_question_types: true
+deduplication:
+  key: [normalized_file, question]
+  keep: smallest_numeric_id
+multi_gold:
+  thresholds: [0.5, 0.6, 0.7]
+  minimum_answer_tokens: 3
+  force_strict_gold_relevant: true

@@ -73,5 +73,36 @@ Temuan penting:
 - Tipe pedoman hanya tersedia pada 21 dokumen, sehingga pembentukan split harus divalidasi per seed.
 - Gold ketat harus memakai kunci metadata dan `answer_start` tidak boleh dipakai.
 
+---
+
+## Checkpoint Tahap 2: Pra-pemrosesan, Split, dan Label (2026-10-15)
+
+Status: **SELESAI**
+
+Yang dikerjakan:
+- Menormalisasi nama, menduplikasi ulang secara deterministik, menyatukan QA dengan chunk, memetakan delapan tipe, dan membuat ID stabil.
+- Membentuk 10 split per dokumen serta label gold ketat dan multi-gold pada ambang 0,5/0,6/0,7.
+
+File yang dibuat:
+- `src/text.py`, `src/data.py`, `src/labels.py`, `scripts/prepare_data.py`, `configs/data.yaml`.
+- `tests/test_data.py`, `tests/test_labels.py`, `reports/02_data_preparation.md`.
+- Artefak privat di `data/processed/` dan bukti di `results/data_preparation/audit.json`.
+
+Bukti verifikasi:
+- Rekonsiliasi lengkap: 911 → 858 setelah deduplikasi → 858 setelah join → 858 final; 0 QA gagal join.
+- 120 dokumen dibagi 72/24/24 pada semua seed; overlap 0 dan seluruh 8 tipe hadir pada koleksi/dev/test.
+- Gold ketat: 858 qrels; multi-gold eligible: 770 QA, dengan 4.905/3.551/2.115 qrels pada ambang 0,5/0,6/0,7.
+- `6 passed`, `STAGE2_ASSERTIONS_OK`, dan manifest deterministik pada rerun.
+
+Kriteria lolos:
+- [x] Rekonsiliasi jumlah lengkap dan seluruh QA final berhasil join.
+- [x] Sepuluh split bebas tumpang tindih dan lengkap tipe.
+- [x] Label ketat dan tiga label multi-gold tersimpan serta sensitivitas dilaporkan.
+
+Temuan penting:
+- 28 dari 35 kelompok duplikat menunjuk lokasi gold berbeda; kebijakan ID terkecil dibekukan sebelum retrieval.
+- Label multi-gold sensitif terhadap ambang, sehingga ketiga ambang wajib dilaporkan terpisah.
+
+
 
 

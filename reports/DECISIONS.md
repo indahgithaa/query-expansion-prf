@@ -9,4 +9,7 @@
 | 2026-10-15 | Menurunkan pin NumPy dari 2.5.4 ke 2.5.3. | Build 2.5.4 diblokir Windows Application Control pada `_pocketfft_umath`; build 2.5.3 terverifikasi dapat dimuat dengan SciPy 1.18.1 dan scikit-learn 1.9.1 di mesin yang sama. |
 | 2026-10-15 | Menetapkan identitas chunk dari `(nama file ternormalisasi, page_number, chunk_index)`. | Join metadata berhasil 911/911, sedangkan 12 `context` tidak sama persis dengan teks chunk; identitas metadata lebih stabil daripada kesamaan string. |
 | 2026-10-15 | Mengabaikan `answer_start` untuk seluruh pipeline. | Hanya 79/911 offset yang valid, sesuai masalah data yang sudah diantisipasi. |
+| 2026-10-15 | Pada duplikasi `(file, question)`, mempertahankan ID numerik terkecil. | Kebijakan deterministik, dapat diaudit, dan tidak menggunakan performa retrieval atau bagian test; 53 baris dibuang dari 35 kelompok. |
+| 2026-10-15 | Membentuk split 72/24/24 dokumen dengan shuffle deterministik per seed dan validasi kedelapan tipe. | Menjaga rasio 60/20/20, mencegah kebocoran pasien, dan menjamin semua skenario dapat dihitung di setiap bagian. |
+| 2026-10-15 | Memakai himpunan token unik jawaban untuk rasio overlap multi-gold. | Implementasi langsung definisi `|A ∩ token(C)| / |A|`; gold ketat selalu dipertahankan dan 88 QA dengan kurang dari tiga token dikeluarkan. |
 
