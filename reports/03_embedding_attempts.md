@@ -40,3 +40,13 @@ Tidak ada halaman Kaggle yang berhasil dibuka, sehingga tidak ada login, 2FA, ca
 
 Buka/aktifkan browser yang dapat dikendalikan oleh Codex (idealnya Chrome), pastikan sesi Kaggle sudah login, lalu minta penelitian dilanjutkan. Setelah browser terdeteksi, cache embedding akan dihitung pada notebook/dataset Kaggle privat dan hasilnya diunduh serta diverifikasi. Jika Kaggle meminta login, 2FA, verifikasi telepon, atau captcha, pengguna perlu mengambil alih sesuai protokol.
 
+## Persiapan Kaggle yang telah selesai
+
+Walaupun browser belum tersedia, seluruh artefak lokal telah disiapkan agar eksekusi UI tidak membutuhkan perubahan metodologis:
+
+- `kaggle_io/embeddings/embedding_inputs.zip` berukuran 3.415.577 byte, SHA-256 `82a5317411e997e976923e3421140b9612fd6857e39b54f55237d5858769cfb7`.
+- Arsip berisi tepat `chunks.jsonl` (13.737 chunk) dan `qa.jsonl` (858 QA); arsip dan manifest tetap diabaikan Git.
+- `notebooks/run_embeddings.ipynb` memiliki tujuh sel: pemeriksaan Python/GPU/internet, instalasi dependensi pin, ekstraksi input, E5-base dengan revision tercatat, encoding GPU, validasi shape/finite/norma L2, SHA-256 output, dan pembuatan `e5_base_embeddings.zip`.
+- Dataset dan notebook diwajibkan berstatus Private; dataset harus dihapus setelah hasil terunduh dan diverifikasi.
+- Tiga belas test lokal lulus dan pemeriksaan integrasi menghasilkan `KAGGLE_PACKAGE_OK`.
+

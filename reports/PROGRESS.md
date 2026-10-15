@@ -113,6 +113,10 @@ Embedding E5-base CPU diperkirakan 7,97 jam. Tiga konfigurasi model cadangan E5-
 
 Sesuai kondisi berhenti untuk tahap wajib setelah tiga upaya perbaikan, pekerjaan dihentikan sampai browser yang dapat dikendalikan tersedia dan sesi Kaggle pengguna sudah login.
 
+### Pembaruan persiapan Kaggle
+
+Tanpa melangkahi kriteria Tahap 3, paket input privat dan notebook eksekusi telah disiapkan. `embedding_inputs.zip` berukuran 3.415.577 byte dan memuat tepat data olahan yang dibutuhkan. `notebooks/run_embeddings.ipynb` memiliki tujuh sel dengan guard GPU/internet, E5-base, validasi embedding, hash, serta arsip output. Pemeriksaan menghasilkan `13 passed` dan `KAGGLE_PACKAGE_OK`. Tahap tetap belum lolos sampai hasil benar-benar dijalankan, diunduh, dan diverifikasi.
+
 
 
 
