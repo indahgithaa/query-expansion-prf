@@ -1,0 +1,39 @@
+# Sensitive and generated research data
+data/
+results/
+models/
+kaggle_io/
+
+# Secrets and local environments
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+
+# Python/tool caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Model and notebook caches
+.cache/
+huggingface/
+wandb/
+.ipynb_checkpoints/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Keep directory placeholders where the directory is otherwise ignored
+!data/.gitkeep
+!data/processed/.gitkeep
+!results/.gitkeep
+!kaggle_io/.gitkeep
