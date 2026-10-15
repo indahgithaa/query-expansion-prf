@@ -57,7 +57,7 @@ except Exception as exc:
             """%pip install -q --upgrade sentence-transformers==6.1.0 huggingface-hub==1.33.0"""
         ),
         code_cell(
-            """import hashlib, json, time, zipfile
+            """import hashlib, json, time
 from pathlib import Path
 
 import numpy as np
@@ -68,18 +68,19 @@ from sentence_transformers import SentenceTransformer
 INPUT_ROOT = Path('/kaggle/input')
 WORK = Path('/kaggle/working/prf_embeddings')
 WORK.mkdir(parents=True, exist_ok=True)
-archives = sorted(INPUT_ROOT.rglob('embedding_inputs.zip'))
-if len(archives) != 1:
-    raise RuntimeError(f'Diharapkan tepat satu embedding_inputs.zip, ditemukan {archives}')
-with zipfile.ZipFile(archives[0]) as zf:
-    zf.extractall(WORK / 'input')
+
+def find_one(filename):
+    matches = sorted(INPUT_ROOT.rglob(filename))
+    if len(matches) != 1:
+        raise RuntimeError(f'Diharapkan tepat satu {filename}, ditemukan {matches}')
+    return matches[0]
 
 def read_jsonl(path):
     with Path(path).open(encoding='utf-8') as handle:
         return [json.loads(line) for line in handle if line.strip()]
 
-chunks = read_jsonl(WORK / 'input/chunks.jsonl')
-qa = read_jsonl(WORK / 'input/qa.jsonl')
+chunks = read_jsonl(find_one('chunks.jsonl'))
+qa = read_jsonl(find_one('qa.jsonl'))
 print({'chunks': len(chunks), 'qa': len(qa), 'gpu': torch.cuda.get_device_name(0)})
 assert len(chunks) == 13737 and len(qa) == 858"""
         ),

@@ -105,17 +105,62 @@ Temuan penting:
 
 ---
 
-## Status Tahap 3: TERHENTI (2026-10-15)
+## Checkpoint Tahap 3: Indeks dan Sumber Feedback (2026-10-15)
 
-Tahap belum memenuhi kriteria karena cache embedding belum tersedia. Komponen sparse selesai dan terverifikasi: 120 indeks pasien, 10 pasang indeks feedback, audit kebocoran PASS untuk seed 1–10, perbedaan BM25 terhadap `rank_bm25` sebesar `1,11 × 10^-16`, dan 11 test lulus.
+Status: **SELESAI**
 
-Embedding E5-base CPU diperkirakan 7,97 jam. Tiga konfigurasi model cadangan E5-small tetap melampaui batas dua jam (2,27; 2,14; dan 3,04 jam). Kaggle tidak dapat dibuka karena computer-use mengembalikan inventaris aplikasi/browser kosong; Chrome, peluncuran Chrome, dan IAB semuanya tidak tersedia. Detail lengkap ada di `reports/03_embedding_attempts.md`.
+Yang dikerjakan:
+- Membuat 120 indeks BM25 pasien dan 10 pasang indeks pertanyaan/chunk feedback, dengan pemecahan seri stabil serta audit kebocoran.
+- Menjalankan E5-base di notebook Kaggle privat setelah benchmark CPU melampaui dua jam.
+- Mengunduh, mengekstrak, dan memverifikasi cache embedding; menghentikan sesi GPU dan menghapus dataset privat setelah verifikasi.
+- Menyelaraskan notebook lokal dengan tata letak input Kaggle yang sebenarnya dan menambah verifier cache yang dapat dijalankan ulang.
 
-Sesuai kondisi berhenti untuk tahap wajib setelah tiga upaya perbaikan, pekerjaan dihentikan sampai browser yang dapat dikendalikan tersedia dan sesi Kaggle pengguna sudah login.
+File yang dibuat/diubah:
+- `src/bm25.py`, `src/sources.py`, `src/dense.py`, `scripts/build_indices.py`, `scripts/build_embeddings.py`, `scripts/verify_embeddings.py`.
+- `scripts/prepare_kaggle_embeddings.py`, `notebooks/run_embeddings.ipynb`, pengujian Tahap 3, dan `reports/03_embedding_attempts.md`.
+- Artefak privat `models/indices/`, `models/embeddings/`, `results/indices/`, dan `results/embeddings/`.
 
-### Pembaruan persiapan Kaggle
+Bukti verifikasi:
+- 13.737 chunk dalam 120 indeks pasien; sumber feedback seed 1–10 hanya berisi 72 dokumen koleksi dan overlap dev/test = 0.
+- Selisih maksimum implementasi BM25 terhadap `rank_bm25` adalah `1,11 × 10^-16`.
+- E5-base revision `d128750597153bb5987e10b1c3493a34e5a4502a`; waktu encoding GPU 327,239 detik.
+- Bentuk embedding: chunk `(13737, 768)`, pertanyaan `(858, 768)`, jawaban `(858, 768)`; dtype float32, seluruh nilai finite dan norma L2 ≈ 1.
+- Semua hash SHA-256 cocok manifest dan urutan ID cocok sumber; seluruh test lokal lulus.
 
-Tanpa melangkahi kriteria Tahap 3, paket input privat dan notebook eksekusi telah disiapkan. `embedding_inputs.zip` berukuran 3.415.577 byte dan memuat tepat data olahan yang dibutuhkan. `notebooks/run_embeddings.ipynb` memiliki tujuh sel dengan guard GPU/internet, E5-base, validasi embedding, hash, serta arsip output. Pemeriksaan menghasilkan `13 passed` dan `KAGGLE_PACKAGE_OK`. Tahap tetap belum lolos sampai hasil benar-benar dijalankan, diunduh, dan diverifikasi.
+Kriteria lolos:
+- [x] Unit test BM25 lulus dan paritas pustaka terverifikasi.
+- [x] Uji kebocoran lulus untuk seluruh pengulangan.
+- [x] Cache embedding tersimpan dan terverifikasi.
+
+Temuan penting:
+- Komputasi GPU memang diperlukan: estimasi CPU E5-base 7,97 jam, sedangkan Kaggle T4 menyelesaikan encoding dalam sekitar 5,45 menit.
+- Kaggle mengekstrak arsip dataset secara otomatis; loader notebook kini mencari tepat satu `chunks.jsonl` dan `qa.jsonl` secara rekursif.
+
+---
+
+## Checkpoint Tahap 4: Set Parafrasa dan Skenario (2026-10-15)
+
+Status: **SELESAI**
+
+Yang dikerjakan:
+- Menulis enam parafrasa dev dan enam parafrasa test untuk masing-masing dari delapan tipe pertanyaan.
+- Membuat assignment parafrasa deterministik per `(seed, qid)` dan manifest TPL/NEW/PARA/PNEW untuk 10 pengulangan.
+- Mengimplementasikan leave-one-type-out untuk koleksi QA pada NEW/PNEW; korpus eksternal tidak berubah.
+
+File yang dibuat:
+- `src/scenarios.py`, `scripts/prepare_paraphrases.py`, `scripts/embed_paraphrases.py`, `configs/scenarios.yaml`, dan `tests/test_scenarios.py`.
+- `reports/04_paraphrases.md`; artefak privat `data/processed/paraphrases.json`, `data/processed/scenarios/`, dan `results/scenarios/audit.json`.
+
+Bukti verifikasi:
+- 96 parafrasa: 48 dev dan 48 test; tiap tipe tepat 6+6.
+- Duplikasi internal 0, overlap dev–test 0, identik dengan template 0, dan seluruh pemeriksaan penanda maksud lulus.
+- 6.830 pemeriksaan NEW/PNEW lintas 10 seed lulus tanpa satu pun QA bertipe target di koleksi pertanyaan.
+- 17 unit test lulus.
+
+Kriteria lolos:
+- [x] Seluruh 96 parafrasa tersimpan dan ditampilkan dalam laporan.
+- [x] Pemeriksaan otomatis identitas, overlap, dan maksud lulus.
+- [x] Skenario NEW/PNEW bebas QA dengan tipe sama.
 
 
 

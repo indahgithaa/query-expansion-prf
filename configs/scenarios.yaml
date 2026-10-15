@@ -1,0 +1,11 @@
+scenarios: [TPL, NEW, PARA, PNEW]
+paraphrases_per_type:
+  dev: 6
+  test: 6
+assignment: sha256_seed_qid_modulo_variant_count
+question_feedback:
+  TPL: complete
+  NEW: leave_one_question_type_out
+  PARA: complete
+  PNEW: leave_one_question_type_out
+external_feedback: complete_collection_documents
