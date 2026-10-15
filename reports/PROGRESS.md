@@ -103,6 +103,17 @@ Temuan penting:
 - 28 dari 35 kelompok duplikat menunjuk lokasi gold berbeda; kebijakan ID terkecil dibekukan sebelum retrieval.
 - Label multi-gold sensitif terhadap ambang, sehingga ketiga ambang wajib dilaporkan terpisah.
 
+---
+
+## Status Tahap 3: TERHENTI (2026-10-15)
+
+Tahap belum memenuhi kriteria karena cache embedding belum tersedia. Komponen sparse selesai dan terverifikasi: 120 indeks pasien, 10 pasang indeks feedback, audit kebocoran PASS untuk seed 1–10, perbedaan BM25 terhadap `rank_bm25` sebesar `1,11 × 10^-16`, dan 11 test lulus.
+
+Embedding E5-base CPU diperkirakan 7,97 jam. Tiga konfigurasi model cadangan E5-small tetap melampaui batas dua jam (2,27; 2,14; dan 3,04 jam). Kaggle tidak dapat dibuka karena computer-use mengembalikan inventaris aplikasi/browser kosong; Chrome, peluncuran Chrome, dan IAB semuanya tidak tersedia. Detail lengkap ada di `reports/03_embedding_attempts.md`.
+
+Sesuai kondisi berhenti untuk tahap wajib setelah tiga upaya perbaikan, pekerjaan dihentikan sampai browser yang dapat dikendalikan tersedia dan sesi Kaggle pengguna sudah login.
+
+
 
 
 
