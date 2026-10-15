@@ -162,6 +162,34 @@ Kriteria lolos:
 - [x] Pemeriksaan otomatis identitas, overlap, dan maksud lulus.
 - [x] Skenario NEW/PNEW bebas QA dengan tipe sama.
 
+---
+
+## Checkpoint Tahap 5: Baseline, PRF Klasik, dan Metode Inti BM25 (2026-10-15)
+
+Status: **SELESAI**
+
+Yang dikerjakan:
+- Mengimplementasikan min-max, sigmoid stabil, RRF, query feedback berbobot, softmax, dan RM3.
+- Menjalankan B0, B1, RM3, P-EXT, P-QA, P-FUS, ZONE3, SOFT, SOFT-SM, dan ORACLE-W pada dev seed 1–3.
+- Menyetel grid `(m,r)`, lalu `k,tau`, dengan kendala tidak ada skenario turun lebih dari 0,01 terhadap konfigurasi awal.
+
+File yang dibuat:
+- `src/methods.py`, `scripts/run_stage5.py`, `tests/test_methods.py`, `configs/stage5.yaml`, dan `reports/05_bm25_methods.md`.
+- `reports/figures/05_soft_heatmap.png` serta artefak privat di `results/stage5/`.
+
+Bukti verifikasi:
+- 2.052 kombinasi query–skenario dev dievaluasi; parameter dasar terpilih `m=5, r=3`.
+- SOFT dev: TPL 0,6133; NEW 0,3587; PARA 0,3577; PNEW 0,2826; rata-rata 0,4031.
+- B1 rata-rata 0,2442; RM3 terbaik (`5,30,0,5`) 0,2560; ORACLE-W 0,4800.
+- Selisih terhadap sanity check hanya 0,0208 untuk B1 dan 0,0121 untuk SOFT.
+- Heatmap diperiksa visual dan 21 unit test lulus sebelum run.
+
+Kriteria lolos:
+- [x] Seluruh konfigurasi berbasis BM25 berjalan di dev.
+- [x] Parameter dasar dibekukan hanya dari dev.
+- [x] Heatmap tersedia.
+- [x] Unit test rumus dan tie-breaking lulus.
+
 
 
 

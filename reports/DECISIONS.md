@@ -22,4 +22,7 @@
 | 2026-10-15 | Menganggap penghapusan dataset privat Kaggle selesai berdasarkan konfirmasi eksplisit pengguna. | Computer-use dihentikan sebelum klik final dapat diverifikasi, lalu pengguna menyatakan dataset sudah terhapus; sesi GPU sebelumnya telah dihentikan dan artefak lokal telah diverifikasi. |
 | 2026-10-15 | Menetapkan enam parafrasa dev dan enam parafrasa test berbeda untuk setiap dari delapan tipe pertanyaan. | Pemisahan mencegah bentuk test muncul saat pemilihan dev; variasi mencakup bahasa awam, sinonim, perubahan susunan, dan kalimat lebih panjang. |
 | 2026-10-15 | Memilih parafrasa per QA dengan hash deterministik `(seed, qid)`. | Menjaga pemerataan variasi dan reproduktibilitas tanpa memakai label atau hasil retrieval. |
+| 2026-10-15 | Membekukan parameter dasar SOFT pada `m=5` dan `r=3`. | Pada dev seed 1–3, konfigurasi ini memberi MRR rata-rata tertinggi 0,4031 dan memenuhi kendala penurunan maksimum 0,01 per skenario terhadap konfigurasi awal `m=3,r=3`. |
+| 2026-10-15 | Memakai RM3 dengan `fb_docs=5`, `fb_terms=30`, dan interpolasi 0,5 untuk tahap berikutnya. | Kombinasi tersebut terbaik pada grid dev dengan MRR rata-rata 0,2560; tidak ada data test yang dipakai. |
+| 2026-10-15 | Menetapkan ZONE3 pada persentil 33 dan 67 distribusi skor similarity dev serta SOFT-SM pada temperatur 1,0. | Protokol tidak memberi grid khusus untuk dua parameter ini; pilihan deterministik tersebut merepresentasikan tiga zona berukuran kira-kira seimbang dan softmax standar. |
 

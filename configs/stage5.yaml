@@ -1,0 +1,20 @@
+selection_seeds:
+- 1
+- 2
+- 3
+base:
+  m: 5
+  r: 3
+  k: 2.0
+  tau: 3.125116827123538
+zone3:
+  tau2_percentile: 33
+  tau1_percentile: 67
+  tau2: 2.358383408963533
+  tau1: 3.9440561913005965
+softmax_temperature: 1.0
+rm3:
+  fb_docs: 5
+  fb_terms: 30
+  lambda: 0.5
+selection_constraint: no_scenario_drop_gt_0.01_vs_m3_r3
