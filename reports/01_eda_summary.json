@@ -1,0 +1,218 @@
+{
+  "source": {
+    "dataset": "data/dataset/dataset.json",
+    "chunks_directory": "data/chunks",
+    "stage": 1,
+    "raw_read_only": true
+  },
+  "counts": {
+    "qa_rows": 911,
+    "unique_qa_ids": 911,
+    "qa_documents": 120,
+    "chunk_files": 120,
+    "chunks": 13737,
+    "chunk_pdf_names": 120,
+    "question_templates": 8
+  },
+  "schema": {
+    "qa_fields": [
+      "answer",
+      "anthropometric_assessment",
+      "chunk_index",
+      "context",
+      "file",
+      "id",
+      "medical_diagnosis",
+      "page_number",
+      "question",
+      "report_title"
+    ],
+    "chunk_fields": [
+      "chunk_index",
+      "page_number",
+      "pdf_name",
+      "text"
+    ],
+    "qa_unexpected_field_sets": 0,
+    "chunk_unexpected_field_sets": 0,
+    "qa_missing_or_empty": {
+      "answer": 0,
+      "anthropometric_assessment": 0,
+      "chunk_index": 0,
+      "context": 0,
+      "file": 0,
+      "id": 0,
+      "medical_diagnosis": 0,
+      "page_number": 0,
+      "question": 0,
+      "report_title": 0
+    },
+    "chunk_missing_or_empty": {
+      "chunk_index": 0,
+      "page_number": 0,
+      "pdf_name": 0,
+      "text": 0
+    }
+  },
+  "questions": {
+    "template_counts": {
+      "Apa metode skrining status gizi yang direkomendasikan?": 128,
+      "Apa pedoman diet yang digunakan dalam perencanaan diet pasien ini?": 21,
+      "Apa tujuan diet pada pasien ini?": 127,
+      "Bagaimana data biokimia/parameter lab pada pasien (yg abnormal)?": 127,
+      "Bagaimana menyusun diagnosis gizi dengan format PES pada pasien ini?": 128,
+      "Bagaimana prinsip diet yang tepat sesuai dengan kondisi pasien ini?": 126,
+      "Bagaimana status gizi pada pasien ini?": 128,
+      "Bagaimana syarat diet yang harus dipenuhi dalam pengaturan diet pasien ini?": 126
+    },
+    "type_counts": {
+      "skrining": 128,
+      "status_gizi": 128,
+      "biokimia": 127,
+      "pes": 128,
+      "tujuan_diet": 127,
+      "prinsip_diet": 126,
+      "syarat_diet": 126,
+      "pedoman": 21
+    },
+    "type_document_counts": {
+      "skrining": 120,
+      "status_gizi": 120,
+      "biokimia": 119,
+      "pes": 120,
+      "tujuan_diet": 120,
+      "prinsip_diet": 119,
+      "syarat_diet": 119,
+      "pedoman": 21
+    },
+    "unknown_templates": []
+  },
+  "duplicates": {
+    "key": [
+      "file",
+      "question"
+    ],
+    "groups": 35,
+    "extra_rows": 53,
+    "max_group_size": 3,
+    "expected_rows_after_deduplication": 858
+  },
+  "filenames": {
+    "raw_exact_matches": 120,
+    "normalized_matches": 120,
+    "qa_anomalies": {
+      "hash_unicode": 0,
+      "word_joiner_u2060": 1,
+      "changed_by_nfkc": 0,
+      "changed_by_full_normalization": 1
+    },
+    "chunk_anomalies": {
+      "hash_unicode": 0,
+      "word_joiner_u2060": 1,
+      "changed_by_nfkc": 0,
+      "changed_by_full_normalization": 1
+    },
+    "normalization_collisions": 0
+  },
+  "joins": {
+    "duplicate_chunk_keys": 0,
+    "raw_key_matches": 911,
+    "normalized_key_matches": 911,
+    "context_exact_matches": 899,
+    "context_mismatches": 12
+  },
+  "answers": {
+    "spans": 911,
+    "exact_valid_offsets": 79,
+    "invalid_offsets": 832,
+    "qa_with_invalid_offset": 832,
+    "verbatim_in_context": 79,
+    "not_verbatim_in_context": 832,
+    "array_length_mismatches": 0
+  },
+  "lengths": {
+    "question_tokens": {
+      "n": 911,
+      "min": 6,
+      "q1": 6.0,
+      "median": 9.0,
+      "mean": 8.457738748627882,
+      "q3": 10.0,
+      "max": 11
+    },
+    "answer_tokens": {
+      "n": 911,
+      "min": 1,
+      "q1": 7.0,
+      "median": 29.0,
+      "mean": 71.77936333699232,
+      "q3": 107.5,
+      "max": 692
+    },
+    "answer_characters": {
+      "n": 911,
+      "min": 3,
+      "q1": 49.0,
+      "median": 212.0,
+      "mean": 498.52689352360045,
+      "q3": 780.5,
+      "max": 4847
+    },
+    "context_tokens": {
+      "n": 911,
+      "min": 8,
+      "q1": 124.0,
+      "median": 142.0,
+      "mean": 130.69593852908892,
+      "q3": 151.0,
+      "max": 192
+    },
+    "context_characters": {
+      "n": 911,
+      "min": 60,
+      "q1": 848.5,
+      "median": 1000.0,
+      "mean": 882.1536772777168,
+      "q3": 1000.0,
+      "max": 1000
+    },
+    "chunk_tokens": {
+      "n": 13737,
+      "min": 4,
+      "q1": 88.0,
+      "median": 132.0,
+      "mean": 118.68064351750746,
+      "q3": 146.0,
+      "max": 468
+    },
+    "chunk_characters": {
+      "n": 13737,
+      "min": 44,
+      "q1": 598.0,
+      "median": 980.0,
+      "mean": 796.2744412899468,
+      "q3": 1000.0,
+      "max": 1029
+    }
+  },
+  "per_document": {
+    "qa": {
+      "n": 120,
+      "min": 6,
+      "q1": 7.0,
+      "median": 7.0,
+      "mean": 7.591666666666667,
+      "q3": 7.0,
+      "max": 21
+    },
+    "chunks": {
+      "n": 120,
+      "min": 32,
+      "q1": 85.0,
+      "median": 109.0,
+      "mean": 114.475,
+      "q3": 134.0,
+      "max": 256
+    }
+  }
+}

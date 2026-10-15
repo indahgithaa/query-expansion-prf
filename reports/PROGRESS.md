@@ -44,4 +44,34 @@ Temuan penting:
 - `chunks.zip` tidak tersedia, tetapi 120 file JSON hasil ekstraksinya tersedia dan akan dipakai sebagai sumber ekuivalen.
 - Komputasi lokal hanya CPU; estimasi embedding dan reranker akan diukur sebelum memutuskan penggunaan Kaggle.
 
+---
+
+## Checkpoint Tahap 1: Pemahaman Data (2026-10-15)
+
+Status: **SELESAI**
+
+Yang dikerjakan:
+- Mengaudit skema, jumlah sumber, distribusi tipe, duplikasi, nama file, join, validitas offset, panjang teks, dan cakupan per dokumen secara read-only.
+- Membuat tiga gambar EDA dan menyimpan bukti agregat privat di `results/eda/summary.json`.
+
+File yang dibuat:
+- `scripts/run_eda.py`, `reports/01_eda.md`, `reports/01_eda_summary.json`.
+- `reports/figures/01_question_type_distribution.png`, `02_answer_length_distribution.png`, dan `03_document_coverage.png`.
+
+Bukti verifikasi:
+- 911 QA, 120 dokumen, 13.737 chunk, 8 template; seluruh field wajib lengkap.
+- 35 kelompok duplikat dan 53 baris ekstra menghasilkan perkiraan 858 QA setelah deduplikasi.
+- Join metadata 911/911; context identik 899/911; hanya 79/911 `answer_start` valid.
+- Semua template terpetakan; satu nama mengandung `U+2060`; collision normalisasi 0.
+- Assertion otomatis menghasilkan `EDA_ASSERTIONS_OK`; rerun menghasilkan perubahan hash 0 pada lima artefak; ketiga gambar telah diperiksa visual.
+
+Kriteria lolos:
+- [x] Statistik dan seluruh masalah data yang diketahui dilaporkan.
+- [x] Tiga gambar tersimpan, terbaca, dan dapat direproduksi.
+
+Temuan penting:
+- Tipe pedoman hanya tersedia pada 21 dokumen, sehingga pembentukan split harus divalidasi per seed.
+- Gold ketat harus memakai kunci metadata dan `answer_start` tidak boleh dipakai.
+
+
 

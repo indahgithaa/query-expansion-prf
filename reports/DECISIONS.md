@@ -7,4 +7,6 @@
 | 2026-10-15 | Memakai `data/chunks/*.chunks.json` sebagai sumber chunk. | Arsip `chunks.zip` tidak ditemukan, tetapi 120 berkas hasil ekstraksinya tersedia lengkap; pemrosesan tidak memerlukan arsip asli. |
 | 2026-10-15 | Menjaga seluruh `data/`, `results/`, `models/`, `.env`, cache, dan `kaggle_io/` di luar Git. | Teks laporan klinis tetap dianggap sensitif meskipun sudah disamarkan. |
 | 2026-10-15 | Menurunkan pin NumPy dari 2.5.4 ke 2.5.3. | Build 2.5.4 diblokir Windows Application Control pada `_pocketfft_umath`; build 2.5.3 terverifikasi dapat dimuat dengan SciPy 1.18.1 dan scikit-learn 1.9.1 di mesin yang sama. |
+| 2026-10-15 | Menetapkan identitas chunk dari `(nama file ternormalisasi, page_number, chunk_index)`. | Join metadata berhasil 911/911, sedangkan 12 `context` tidak sama persis dengan teks chunk; identitas metadata lebih stabil daripada kesamaan string. |
+| 2026-10-15 | Mengabaikan `answer_start` untuk seluruh pipeline. | Hanya 79/911 offset yang valid, sesuai masalah data yang sudah diantisipasi. |
 
