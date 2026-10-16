@@ -371,6 +371,35 @@ Kriteria tahap opsional:
 - [x] Tahap ditandai SKIPPED tanpa mengarang metrik generation.
 - [x] Artefak persiapan tetap tersedia untuk dilanjutkan ketika computer-use pulih.
 
+---
+
+## Checkpoint Tahap 12: Jejak Perhitungan Manual (2026-10-16)
+
+Status: **SELESAI**
+
+Yang dikerjakan:
+- Menyeleksi secara deterministik satu QA test dari dokumen dengan kurang dari 40 chunk yang mengalami kenaikan rank gold terbesar dari B1 ke SOFT.
+- Merekonstruksi tokenisasi, QS-BM25, lima feedback QA dan eksternal, query ekspansi, BM25 baseline, normalisasi min–max, sigmoid, SOFT, reranker FINAL, RR, nDCG@10, dan satu contoh Robustness Index.
+- Mencocokkan ranking hasil rekonstruksi dengan output beku Tahap 7.
+
+File yang dibuat:
+- `scripts/run_stage12.py`, `scripts/verify_stage12.py`, dan `tests/test_stage12.py`.
+- `reports/12_manual_trace.md`; artefak audit privat di `results/stage12/manual_trace.json`.
+
+Bukti verifikasi:
+- Contoh terpilih: seed 7, `Q0100`, TPL, dokumen 32 chunk; merupakan kenaikan terbesar dari 20 kandidat yang memenuhi syarat.
+- Rank gold berubah B1 14 → SOFT 1 → FINAL 1.
+- RR berubah 0,071429 → 1,000000 dan nDCG@10 berubah 0 → 1,000000.
+- Contoh pooled FINAL vs B1 memberi RI `(4268-1657)/6888 = 0,379065`.
+- Ranking B1, SOFT, dan FINAL sama persis dengan artefak Tahap 7; verifier Tahap 12 berstatus PASS.
+- Seluruh 42 test repository lulus.
+
+Kriteria lolos:
+- [x] Seluruh sembilan komponen jejak manual tersedia dengan angka nyata.
+- [x] Sedikitnya satu term QS-BM25 dan satu term BM25 baseline dihitung langkah demi langkah.
+- [x] Normalisasi, sigmoid, skor SOFT, dan kombinasi reranker ditampilkan untuk tiga chunk.
+- [x] Rank, RR, nDCG@10, dan Robustness Index direkonstruksi serta diverifikasi.
+
 
 
 
