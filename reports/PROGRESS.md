@@ -223,6 +223,35 @@ Kriteria lolos:
 - [x] Alasan penerimaan dan penolakan tiap komponen terdokumentasi.
 - [x] `reports/06_selection.md` dan `configs/final.yaml` tersedia sebelum Tahap 7.
 
+---
+
+## Checkpoint Tahap 7: Run Final 10 Pengulangan (2026-10-16)
+
+Status: **SELESAI**
+
+Yang dikerjakan:
+- Menyetel `k`, `tau`, lambda B1+RR, dan lambda FINAL secara terpisah pada dev setiap seed 1–10.
+- Mengevaluasi 16 konfigurasi wajib pada test di skenario TPL, NEW, PARA, dan PNEW setelah parameter seed terkunci.
+- Menyimpan ranking maksimal top-50, rank per query, grid parameter, serta hash setiap artefak.
+- Menambahkan verifier independen untuk cakupan, integritas referensial, posisi gold, dan pemisahan dev/test.
+
+File yang dibuat:
+- `scripts/run_stage7.py`, `scripts/verify_stage7.py`, `tests/test_stage7.py`, dan `reports/07_final_runs.md`.
+- Artefak privat di `results/runs/`, `results/params/`, dan `results/stage7/`.
+
+Bukti verifikasi:
+- 10 seed, 6.888 observasi query–skenario test, 16 metode, dan 110.208 baris ranking selesai.
+- Dua puluh hash output cocok; setiap query memiliki seluruh metode tanpa ranking duplikat atau chunk dari pasien lain.
+- Posisi gold pada ranking cocok dengan seluruh kolom rank; empat dokumen dengan kurang dari 50 chunk ditangani dengan menyimpan seluruh chunk.
+- Semua file parameter mencatat `selection_partition=dev`, `evaluation_partition=test`, dan `test_used_for_tuning=false`.
+- 29 unit test lulus sebelum verifikasi run lengkap.
+
+Kriteria lolos:
+- [x] Parameter adaptif dipilih ulang hanya dari dev di setiap pengulangan.
+- [x] Seluruh konfigurasi wajib dievaluasi pada empat skenario test.
+- [x] Ranking top-50 dan parameter tersedia untuk seluruh seed.
+- [x] Audit lengkap lulus tanpa pelanggaran kebocoran test.
+
 
 
 
