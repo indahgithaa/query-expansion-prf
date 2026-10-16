@@ -281,6 +281,36 @@ Kriteria lolos:
 - [x] Robustness, Wilcoxon, bootstrap 10.000 resample, Holm, dan effect size tersedia.
 - [x] Unit test berbasis contoh hitung manual lulus.
 
+---
+
+## Checkpoint Tahap 9: Analisis Komponen (2026-10-16)
+
+Status: **SELESAI**
+
+Yang dikerjakan:
+- Membandingkan QS-BM25, QS-EMB, dua hybrid, TF-IDF kata, dan TF-IDF karakter n-gram 3–5 pada dev seed 1–3.
+- Mengukur distribusi skor similarity dan ketepatan tipe lima feedback teratas pada TPL/PARA.
+- Merangkum BM25, dense teks penuh, dense Rocchio, serta hybrid untuk retrieval chunk.
+- Membandingkan B1/B1+RR dan SOFT/FINAL pada test serta mendekomposisi kenaikan B1 ke FINAL.
+
+File yang dibuat/diubah:
+- `src/semantic.py`, `scripts/run_stage6_selection.py`, `scripts/run_stage9.py`, `scripts/verify_stage9.py`, dan `tests/test_semantic.py`.
+- `reports/09_components.md` dan `reports/figures/09_similarity_score_distribution.png`.
+- Artefak privat di `results/stage9/`.
+
+Bukti verifikasi:
+- QS-EMB/QS-HYB menaikkan PARA tetapi melanggar batas penurunan TPL/NEW; kedua TF-IDF tambahan juga tidak memenuhi kendala. QS-BM25 tetap sah.
+- Hybrid Rocchio mencapai MRR dev 0,3986 dan memperbaiki NEW/PNEW, tetapi menurunkan TPL 0,0626 terhadap R-BM25.
+- Reranker menaikkan B1 sebesar 0,0682 MRR dan SOFT sebesar 0,0089 MRR pada test.
+- Dalam dekomposisi berurutan, ekspansi/pembobotan menyumbang 93,97% dan reranker 6,03% dari kenaikan B1–FINAL.
+- Delapan hash dan seluruh cakupan analisis lolos verifier; gambar diperiksa visual; 37 unit test lulus.
+
+Kriteria lolos:
+- [x] Analisis question similarity mencakup embedding, hybrid, TF-IDF kata, dan TF-IDF karakter.
+- [x] Distribusi skor dan akurasi feedback tersedia.
+- [x] Dua cara ekspansi dense serta hybrid dibandingkan dengan BM25.
+- [x] Pengaruh reranker dan tabel dekomposisi B1–FINAL tersedia.
+
 
 
 

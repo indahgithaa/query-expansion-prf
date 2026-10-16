@@ -22,7 +22,7 @@ from src.bm25 import seeded_tie_rank
 from src.data import QUESTION_TYPE_ORDER, read_json, read_jsonl, write_json
 from src.dense import encode_e5_transformers, validate_embeddings
 from src.methods import descending_indices, expanded_weights, minmax, rank_of, rrf_scores, sigmoid_weight
-from src.semantic import cosine_scores, normalized_average, rocchio_vector, rrf_pair
+from src.semantic import TfidfSimilarity, cosine_scores, normalized_average, rocchio_vector, rrf_pair
 from src.sources import ExternalFeedbackIndex, PatientBM25Index, QuestionFeedbackIndex
 from src.text import tokenize
 
@@ -94,6 +94,7 @@ class Resources:
 def question_scores(
     method: str, query: str, query_vector: np.ndarray, index: QuestionFeedbackIndex,
     vectors: np.ndarray, *, seed: int, query_id: str,
+    tfidf_index: TfidfSimilarity | None = None,
 ) -> np.ndarray:
     bm25 = index.model.scores(tokenize(query))
     if method == "QS-BM25":
@@ -111,6 +112,10 @@ def question_scores(
             dense, index.item_ids, seed=seed, query_id=f"{query_id}:dense",
         )]
         return rrf_scores([bm25_order, dense_order], len(index.item_ids), k=60)
+    if method in {"QS-TFIDF-WORD", "QS-TFIDF-CHAR"}:
+        if tfidf_index is None:
+            raise ValueError(f"Indeks TF-IDF tidak tersedia untuk {method}")
+        return tfidf_index.scores(query)
     raise ValueError(f"Metode QS tidak dikenal: {method}")
 
 
@@ -129,6 +134,7 @@ def build_features(
         collection_chunks = [row for row in resources.chunks if row["doc_id"] in collection_docs]
         q_indexes = {}
         q_vectors = {}
+        q_tfidf = {}
         for exclusion in (None, *QUESTION_TYPE_ORDER):
             rows = [row for row in collection_qa if exclusion is None or row["question_type"] != exclusion]
             index = QuestionFeedbackIndex(rows, tie_seed=seed * 1009)
@@ -136,6 +142,11 @@ def build_features(
             q_vectors[exclusion] = resources.question_vectors[
                 [resources.qid_to_index[qid] for qid in index.item_ids]
             ]
+            if qs_method in {"QS-TFIDF-WORD", "QS-TFIDF-CHAR"}:
+                analyzer = "word" if qs_method == "QS-TFIDF-WORD" else "char_3_5"
+                q_tfidf[exclusion] = TfidfSimilarity(
+                    [item["question"] for item in index.records], analyzer=analyzer,
+                )
         external = ExternalFeedbackIndex(collection_chunks)
         external_cache = {}
         scenario_rows = [
@@ -149,6 +160,7 @@ def build_features(
             scores = question_scores(
                 qs_method, row["query"], query_vector, q_index, q_vectors[exclusion],
                 seed=q_index.tie_seed, query_id=f"{row['qid']}:{row['scenario']}",
+                tfidf_index=q_tfidf.get(exclusion),
             )
             ranking = seeded_tie_rank(
                 scores, q_index.item_ids, seed=q_index.tie_seed,

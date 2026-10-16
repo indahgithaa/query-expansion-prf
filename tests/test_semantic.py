@@ -2,7 +2,14 @@ import numpy as np
 import pytest
 
 from src.methods import rerank_top_k
-from src.semantic import cosine_scores, l2_normalize, normalized_average, rocchio_vector, rrf_pair
+from src.semantic import (
+    TfidfSimilarity,
+    cosine_scores,
+    l2_normalize,
+    normalized_average,
+    rocchio_vector,
+    rrf_pair,
+)
 
 
 def test_l2_normalize_and_cosine_scores():
@@ -26,6 +33,18 @@ def test_normalized_average_and_rrf_pair():
     assert np.allclose(normalized_average([0, 2, 1], [4, 0, 2]), [0.5, 0.5, 0.5])
     fused = rrf_pair([3, 2, 1], [1, 3, 2])
     assert int(np.argmax(fused)) == 1
+
+
+def test_word_tfidf_prefers_matching_document():
+    index = TfidfSimilarity(["diet rendah garam", "skrining status gizi"], analyzer="word")
+    scores = index.scores("status gizi")
+    assert scores[1] > scores[0]
+
+
+def test_character_tfidf_handles_surface_variation():
+    index = TfidfSimilarity(["biokimia pasien", "tujuan diet"], analyzer="char_3_5")
+    scores = index.scores("data biokimia")
+    assert scores[0] > scores[1]
 
 
 def test_rerank_top_k_keeps_remainder_below_candidates():

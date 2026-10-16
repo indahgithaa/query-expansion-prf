@@ -2,11 +2,73 @@
 
 from __future__ import annotations
 
+import math
+import re
+from collections import Counter, defaultdict
 from typing import Sequence
 
 import numpy as np
 
 from src.methods import descending_indices, minmax, rrf_scores
+
+
+WORD_RE = re.compile(r"\w+", flags=re.UNICODE)
+
+
+class TfidfSimilarity:
+    """Small deterministic cosine TF-IDF index for component analysis."""
+
+    def __init__(self, texts: Sequence[str], *, analyzer: str) -> None:
+        if analyzer not in {"word", "char_3_5"}:
+            raise ValueError(f"Analyzer TF-IDF tidak dikenal: {analyzer}")
+        if not texts:
+            raise ValueError("Korpus TF-IDF tidak boleh kosong")
+        self.analyzer = analyzer
+        term_counts = [Counter(self._terms(text)) for text in texts]
+        document_frequency: Counter[str] = Counter()
+        for counts in term_counts:
+            document_frequency.update(counts)
+        size = len(texts)
+        self.idf = {
+            term: math.log((1.0 + size) / (1.0 + frequency)) + 1.0
+            for term, frequency in document_frequency.items()
+        }
+        postings: dict[str, list[tuple[int, float]]] = defaultdict(list)
+        for index, counts in enumerate(term_counts):
+            weights = {term: count * self.idf[term] for term, count in counts.items()}
+            norm = math.sqrt(sum(weight * weight for weight in weights.values()))
+            if norm == 0:
+                continue
+            for term, weight in weights.items():
+                postings[term].append((index, weight / norm))
+        self.postings = dict(postings)
+        self.size = size
+
+    def _terms(self, text: str) -> list[str]:
+        normalized = " ".join(text.lower().split())
+        if self.analyzer == "word":
+            return WORD_RE.findall(normalized)
+        return [
+            normalized[start : start + width]
+            for width in range(3, 6)
+            for start in range(max(0, len(normalized) - width + 1))
+        ]
+
+    def scores(self, query: str) -> np.ndarray:
+        counts = Counter(self._terms(query))
+        weights = {
+            term: count * self.idf[term]
+            for term, count in counts.items()
+            if term in self.idf
+        }
+        norm = math.sqrt(sum(weight * weight for weight in weights.values()))
+        scores = np.zeros(self.size, dtype=float)
+        if norm == 0:
+            return scores
+        for term, weight in weights.items():
+            for index, document_weight in self.postings[term]:
+                scores[index] += (weight / norm) * document_weight
+        return scores
 
 
 def l2_normalize(vector: Sequence[float]) -> np.ndarray:
