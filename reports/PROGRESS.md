@@ -252,6 +252,35 @@ Kriteria lolos:
 - [x] Ranking top-50 dan parameter tersedia untuk seluruh seed.
 - [x] Audit lengkap lulus tanpa pelanggaran kebocoran test.
 
+---
+
+## Checkpoint Tahap 8: Evaluasi dan Analisis Statistik (2026-10-16)
+
+Status: **SELESAI**
+
+Yang dikerjakan:
+- Menghitung MRR, Recall@1/3/5/10, dan nDCG@10 strict-gold per skenario dan rata-rata untuk 10 seed.
+- Menghitung MAP@50 serta nDCG@10 multi-gold pada ambang 0,5/0,6/0,7 dan memeriksa konsistensi urutan metode.
+- Menghitung Robustness Index serta win/tie/loss terhadap B1.
+- Menjalankan tujuh perbandingan Wilcoxon per seed dan gabungan, koreksi Holm, paired bootstrap 10.000 resample, serta rank-biserial effect size.
+
+File yang dibuat:
+- `src/metrics.py`, `scripts/run_stage8.py`, `scripts/verify_stage8.py`, dan `tests/test_metrics.py`.
+- `reports/08_results.md`; artefak privat di `results/stage8/`.
+
+Bukti verifikasi:
+- FINAL mencapai MRR strict rata-rata 0,3961, Recall@10 0,7206, dan nDCG@10 0,4650; tertinggi di antara seluruh metode non-oracle.
+- FINAL vs B1 memberi delta MRR 0,1483 dengan bootstrap CI 95% [0,1405; 0,1559], signifikan setelah Holm pada gabungan dan 10/10 seed.
+- Seluruh tujuh perbandingan utama signifikan setelah Holm pada analisis gabungan; korelasi urutan multi-gold terhadap strict MRR 0,9882-0,9941.
+- FINAL mencatat 4.268 win, 963 tie, 1.657 loss terhadap B1 dengan RI pooled 0,3791.
+- Verifier memeriksa sembilan hash dan seluruh cakupan tabel dengan status PASS; 35 unit test lulus.
+
+Kriteria lolos:
+- [x] Seluruh metrik utama dilaporkan per skenario dan sebagai mean +/- SD antar-seed.
+- [x] Sensitivitas multi-gold dan konsistensi urutan metode dilaporkan.
+- [x] Robustness, Wilcoxon, bootstrap 10.000 resample, Holm, dan effect size tersedia.
+- [x] Unit test berbasis contoh hitung manual lulus.
+
 
 
 
