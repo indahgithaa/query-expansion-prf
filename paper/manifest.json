@@ -1,0 +1,28 @@
+{
+  "generated_by": "scripts/build_stage13_artifacts.py",
+  "source_tables": [
+    "results/stage8/strict_summary.csv",
+    "results/stage8/statistics_combined.csv",
+    "results/stage9/decomposition.csv"
+  ],
+  "files": {
+    "paper/.gitkeep": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "paper/figures/09_similarity_score_distribution.pdf": "1e63c9ea7346cb0cf01cdff3c8033ad714d7a609eb240f0465999f4771efc009",
+    "paper/figures/09_similarity_score_distribution.png": "491252321e3bbfe954dc5f7f2cf12d07787aac68c09b74477097c04005c81915",
+    "paper/figures/10_question_type_performance.pdf": "ae16e13cf68333354e99a5e7d54c95de79907e06b9c450708fa66a62d97917d4",
+    "paper/figures/10_question_type_performance.png": "fc7e2236db00e42b50a9f92b8865770a759e020d2bd05ecc8cbb8259eab146b2",
+    "paper/figures/10_weight_distribution.pdf": "b1fd0ba05077b39505c6627b84b61910ea30b1ef059eb6af9a5a66d4d1bae6d5",
+    "paper/figures/10_weight_distribution.png": "a617794d18b6a3506858036feed5ba37f1b8fcf0d265994ac608c7d2a71defc5",
+    "paper/figures/main_mrr_comparison.pdf": "a3d7e12b8e7a8ce10f2d9bc31ea5354a890a0ed51fcbafe584cc18c45f846774",
+    "paper/figures/main_mrr_comparison.png": "69de48a830b16062c3ea79161a651318662b7af5e620390a55647d471532fb42",
+    "paper/limitations_and_ethics.md": "c5f40c289f3af46480532a679258ca583cce55ebc0c7b454373277d691965524",
+    "paper/outline.md": "60bf41e6fb6b063ee68fe25b9f75d3fdd11e73b0604a1743465abe87b9924051",
+    "paper/reproducibility.md": "6fd0cbb448ec767a97d68b87eb98afcaaa3335086a02cf4be6e4438f8e6b6c64",
+    "paper/tables/component_decomposition.csv": "d2a6189ddc10a9724504eb8d770752201b3f8e733055269761e5f4ee2bc418cc",
+    "paper/tables/component_decomposition.tex": "2ed1e7e1c40daefb0bccc72dc30c0ea0eb7461234796f62670e43bae7b041abf",
+    "paper/tables/main_results.csv": "e5cb30f15772f8cba660856f717a70cd4eb7ff36c3aa12420f1f0e2f671f4809",
+    "paper/tables/main_results.tex": "ec220bc116f9a44b24d1f0fcb5e2f4b3b19f2c4df2f327c1145c2c542176423e",
+    "paper/tables/statistical_comparisons.csv": "0664ef4635f928a57b649c77a9702d9957b857c0d4209810e0c17e951ab98307",
+    "paper/tables/statistical_comparisons.tex": "c01bf9a36187fabec2805c0e608361f9d236cabde7332f683d980fb8fe344519"
+  }
+}

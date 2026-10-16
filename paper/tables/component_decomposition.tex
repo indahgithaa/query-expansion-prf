@@ -1,0 +1,19 @@
+\begin{table*}[t]
+\centering
+\small
+\caption{Dekomposisi berurutan kenaikan B1 ke FINAL.}
+\label{tab:decomposition}
+\begin{tabular}{lrrrr}
+\toprule
+Stage & Method & Mean MRR & Increment & Percent total \\
+\midrule
+Baseline query & B1 & 0.2478 & -- & -- \\
++ QA feedback expansion & P-QA & 0.3395 & 0.0917 & 61.83 \\
++ external feedback and fusion & P-FUS & 0.3564 & 0.0169 & 11.37 \\
++ adaptive sigmoid weighting & SOFT & 0.3871 & 0.0308 & 20.76 \\
++ selected question similarity & SOFT-QS* & 0.3871 & 0.0000 & 0.00 \\
++ selected chunk retriever & SOFT-QS*-R* & 0.3871 & 0.0000 & 0.00 \\
++ cross-encoder reranker & FINAL & 0.3961 & 0.0089 & 6.03 \\
+\bottomrule
+\end{tabular}
+\end{table*}

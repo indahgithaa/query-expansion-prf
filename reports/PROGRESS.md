@@ -400,6 +400,37 @@ Kriteria lolos:
 - [x] Normalisasi, sigmoid, skor SOFT, dan kombinasi reranker ditampilkan untuk tiga chunk.
 - [x] Rank, RR, nDCG@10, dan Robustness Index direkonstruksi serta diverifikasi.
 
+---
+
+## Checkpoint Tahap 13: Laporan Akhir dan Artefak Paper (2026-10-16)
+
+Status: **SELESAI**
+
+Yang dikerjakan:
+- Menyusun laporan akhir yang menjawab tiga rumusan masalah, konfigurasi FINAL, hasil statistik, ketahanan, analisis komponen, keterbatasan, saran, dan status generation.
+- Menyusun draf formal Bab III Metodologi dan Bab IV Hasil dan Pembahasan.
+- Membuat paket paper berisi outline dengan jejak sumber, tabel CSV/LaTeX, empat pasang gambar PNG/PDF, keterbatasan-etika, reproduksibilitas, dan manifest hash.
+- Memperbarui README serta menambahkan runner PowerShell/Bash untuk fase prepare, experiment, analysis, dan finalize.
+
+File utama yang dibuat/diubah:
+- `reports/FINAL_REPORT.md`, `reports/DRAFT_BAB3_METODOLOGI.md`, dan `reports/DRAFT_BAB4_HASIL.md`.
+- `paper/outline.md`, `paper/limitations_and_ethics.md`, `paper/reproducibility.md`, `paper/tables/`, `paper/figures/`, dan `paper/manifest.json`.
+- `scripts/build_stage13_artifacts.py`, `scripts/verify_stage13.py`, `scripts/run_all.ps1`, `scripts/run_all.sh`, `README.md`, dan pin langsung `Pillow==12.3.0`.
+
+Bukti verifikasi:
+- Builder menghasilkan enam berkas tabel dan empat pasangan gambar PNG/PDF; seluruh PNG minimal 300 dpi dan memiliki pasangan PDF.
+- Tabel publikasi direkonstruksi langsung dari CSV Tahap 8–9; nilai FINAL terverifikasi MRR 0,3961, Recall@10 0,7206, dan nDCG@10 0,4650.
+- Manifest mencatat hash 18 artefak paper.
+- Runner PowerShell fase `finalize` selesai dengan status PASS.
+- Verifier Tahap 13 PASS dan seluruh 42 test repository lulus.
+
+Kriteria lolos:
+- [x] Laporan akhir dan draf Bab III–IV lengkap.
+- [x] Outline, tabel LaTeX/CSV, gambar 300 dpi PNG/PDF, etika, dan panduan reproduksi tersedia.
+- [x] README dan runner lintas shell tersedia.
+- [x] Klaim generation dibatasi secara eksplisit karena Tahap 11 SKIPPED.
+- [x] Detail bibliografis ditandai untuk verifikasi pengguna sebelum submission.
+
 
 
 
