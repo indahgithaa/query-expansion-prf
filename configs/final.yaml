@@ -1,0 +1,30 @@
+locked_before_stage7: true
+selection_partition: dev
+selection_seeds:
+- 1
+- 2
+- 3
+m: 5
+r: 3
+question_similarity: QS-BM25
+retriever: R-BM25
+k: 2.0
+tau: 3.125116827123538
+reranker:
+  enabled: true
+  model_id: BAAI/bge-reranker-v2-m3
+  revision: 953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e
+  fallback_used: false
+  top_k: 20
+  lambda: 0.25
+b1_reranker:
+  top_k: 20
+  lambda: 0.75
+dev_metrics:
+  TPL: 0.6154742026604288
+  NEW: 0.3698287634373779
+  PARA: 0.37922769166744635
+  PNEW: 0.30371621825877737
+  mean: 0.41706171900600764
+selection_constraint: no_scenario_drop_gt_0.01_vs_previous_step
+test_used_for_selection: false

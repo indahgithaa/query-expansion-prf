@@ -1,0 +1,21 @@
+selection_seeds:
+- 1
+- 2
+- 3
+m: 5
+r: 3
+question_similarity: QS-BM25
+retriever: R-BM25
+k: 2.0
+tau: 3.125116827123538
+metrics:
+  TPL: 0.6133163476892649
+  NEW: 0.358743031060479
+  PARA: 0.3577384236871766
+  PNEW: 0.2826177477367286
+  mean: 0.4031038875434123
+reranker:
+  status: pending
+  top_k: 20
+  rrf_k: 60
+selection_constraint: no_scenario_drop_gt_0.01_vs_previous_step

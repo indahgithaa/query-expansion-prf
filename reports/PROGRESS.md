@@ -190,6 +190,39 @@ Kriteria lolos:
 - [x] Heatmap tersedia.
 - [x] Unit test rumus dan tie-breaking lulus.
 
+---
+
+## Checkpoint Tahap 6: Pemilihan Komponen Semantik di Dev (2026-10-15)
+
+Status: **SELESAI**
+
+Yang dikerjakan:
+- Menilai QS-BM25, QS-EMB, dua varian QS-HYB, retriever BM25, dense teks penuh, dense Rocchio, dan seluruh pasangan hybrid yang ditentukan protokol pada dev seed 1–3.
+- Membuat cache embedding teks penuh E5-base dan cache reranker cross-encoder di Kaggle privat, lalu memverifikasi revision, jumlah baris, nilai finite, dan hash hasil secara lokal.
+- Menyetel lambda reranker untuk B1+RR dan kandidat FINAL dengan kendala penurunan maksimum 0,01 per skenario.
+- Mengunci konfigurasi terpilih di `configs/final.yaml` sebelum Tahap 7.
+
+File yang dibuat/diubah:
+- `src/dense.py`, `src/semantic.py`, `src/reranker.py`, dan `src/methods.py`.
+- `scripts/run_stage6_selection.py`, skrip persiapan/impor cache Kaggle, `scripts/select_stage6_reranker.py`, dan dua notebook Kaggle Tahap 6.
+- `configs/stage6_pre_reranker.yaml`, `configs/final.yaml`, `tests/test_semantic.py`, dan `reports/06_selection.md`.
+- Artefak privat di `models/embeddings/`, `models/reranker/`, `results/stage6/`, dan `kaggle_io/`.
+
+Bukti verifikasi:
+- Seleksi hanya memakai 2.052 observasi query–skenario dev seed 1–3; audit eksplisit mencatat `test_used_for_selection=false`.
+- QS-BM25 dan R-BM25 adalah satu-satunya pilihan yang memenuhi kendala per-skenario; konfigurasi sebelum reranker memiliki MRR rata-rata 0,4031.
+- Cache reranker berisi 61.011 pasangan unik, memakai `BAAI/bge-reranker-v2-m3` tanpa fallback, dan lolos verifikasi hash.
+- Sesi GPU dihentikan dan kedua dataset privat sementara Kaggle dihapus setelah hasil lokal terverifikasi.
+- FINAL memakai top-20 dan lambda 0,25: TPL 0,6155; NEW 0,3698; PARA 0,3792; PNEW 0,3037; rata-rata 0,4171.
+- B1+RR memakai lambda 0,75 dengan rata-rata 0,3183.
+- Seluruh unit test lokal lulus setelah implementasi.
+
+Kriteria lolos:
+- [x] Cache skor reranker lengkap dan model utama berhasil digunakan.
+- [x] Langkah pemilihan 2–4 dijalankan hanya pada dev seed 1–3.
+- [x] Alasan penerimaan dan penolakan tiap komponen terdokumentasi.
+- [x] `reports/06_selection.md` dan `configs/final.yaml` tersedia sebelum Tahap 7.
+
 
 
 

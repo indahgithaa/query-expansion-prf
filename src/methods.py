@@ -48,6 +48,37 @@ def rank_of(scores: Sequence[float], gold_index: int) -> int:
     return int(np.flatnonzero(order == gold_index)[0]) + 1
 
 
+def rerank_top_k(
+    pipeline_scores: Sequence[float], candidate_indices: Sequence[int],
+    reranker_scores: Sequence[float], weight: float,
+) -> np.ndarray:
+    """Rerank a candidate prefix and retain the pipeline order below it."""
+    pipeline = np.asarray(pipeline_scores, dtype=float)
+    candidates = np.asarray(candidate_indices, dtype=int)
+    reranker = np.asarray(reranker_scores, dtype=float)
+    if pipeline.ndim != 1 or not np.isfinite(pipeline).all():
+        raise ValueError("Skor pipeline harus berupa vektor finite")
+    if candidates.ndim != 1 or reranker.shape != candidates.shape:
+        raise ValueError("Kandidat dan skor reranker harus berupa vektor dengan panjang sama")
+    if not np.isfinite(reranker).all() or not 0.0 <= weight <= 1.0:
+        raise ValueError("Skor reranker harus finite dan bobot harus dalam [0,1]")
+    if len(set(candidates.tolist())) != len(candidates):
+        raise ValueError("Indeks kandidat reranker mengandung duplikat")
+    if np.any(candidates < 0) or np.any(candidates >= len(pipeline)):
+        raise ValueError("Indeks kandidat reranker di luar rentang")
+    expected = descending_indices(pipeline)[: len(candidates)]
+    if not np.array_equal(candidates, expected):
+        raise ValueError("Kandidat harus merupakan prefix ranking pipeline")
+    combined = weight * minmax(reranker) + (1.0 - weight) * minmax(pipeline[candidates])
+    reranked = candidates[descending_indices(combined)]
+    candidate_set = set(candidates.tolist())
+    remainder = np.asarray(
+        [index for index in descending_indices(pipeline) if int(index) not in candidate_set],
+        dtype=int,
+    )
+    return np.concatenate([reranked, remainder])
+
+
 def expanded_weights(
     query_tokens: Iterable[str], feedback_token_lists: Sequence[Sequence[str]], repeat: int,
     feedback_weights: Sequence[float] | None = None,
