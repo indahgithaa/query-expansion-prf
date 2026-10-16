@@ -341,6 +341,36 @@ Kriteria lolos:
 - [x] Dua puluh QA gagal dianalisis dengan kategori yang dapat direproduksi.
 - [x] Tidak ada teks klinis atau nama sumber masuk ke artefak Git.
 
+---
+
+## Checkpoint Tahap 11: Generation di Kaggle (2026-10-16)
+
+Status: **SKIPPED (opsional)**
+
+Yang dikerjakan:
+- Menyiapkan 1.730 input generation privat untuk seed 1, test, TPL/PARA, dan konfigurasi B1, RM3, SOFT, FINAL, serta ORACLE.
+- Menyiapkan notebook Kaggle dengan pemeriksaan lingkungan, Qwen2.5 4-bit, mode uji 5 QA, cache, generation penuh, ROUGE-L, dan BERTScore multilingual.
+- Menyiapkan evaluator lokal untuk kelengkapan, agregasi metrik, Wilcoxon, dan laporan.
+- Mencoba tiga jalur computer-use: Chrome, Edge, dan in-app browser.
+
+File yang dibuat:
+- `scripts/prepare_stage11_generation.py`, `scripts/build_stage11_notebook.py`, `scripts/evaluate_stage11.py`, dan `tests/test_stage11.py`.
+- `notebooks/run_generation.ipynb` dan `reports/11_generation.md`.
+- Input privat `kaggle_io/gen_inputs.jsonl` (diabaikan Git).
+
+Bukti verifikasi:
+- Input berisi tepat 1.730 baris dan 346 observasi; 10 kombinasi skenario-konfigurasi masing-masing berisi 173 baris.
+- SHA-256 input: `880dc8ecd77794d60016d949da69d766ddcfff0eb3fbd78c3cf424472a485fa7`.
+- Dua unit test Tahap 11 lulus pada persiapan awal.
+- Seluruh 41 test repository lulus; JSON notebook dan tujuh sel Python non-magic berhasil dikompilasi.
+- Inventaris computer-use melaporkan `apps: []` dan `browsers: []`; Chrome, Edge, dan IAB masing-masing tidak tersedia.
+- Kegagalan terjadi sebelum login atau upload; tidak ada data klinis yang dikirim ke Kaggle.
+
+Kriteria tahap opsional:
+- [x] Tiga pendekatan akses browser telah dicoba dan dicatat.
+- [x] Tahap ditandai SKIPPED tanpa mengarang metrik generation.
+- [x] Artefak persiapan tetap tersedia untuk dilanjutkan ketika computer-use pulih.
+
 
 
 
