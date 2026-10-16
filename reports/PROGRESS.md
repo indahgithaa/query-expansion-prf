@@ -311,6 +311,36 @@ Kriteria lolos:
 - [x] Dua cara ekspansi dense serta hybrid dibandingkan dengan BM25.
 - [x] Pengaruh reranker dan tabel dekomposisi B1–FINAL tersedia.
 
+---
+
+## Checkpoint Tahap 10: Analisis Lanjutan (2026-10-16)
+
+Status: **SELESAI**
+
+Yang dikerjakan:
+- Menghitung MRR serta Robustness Index SOFT/FINAL terhadap B1 untuk delapan tipe pertanyaan.
+- Merangkum dan memvisualisasikan distribusi bobot adaptif pada empat skenario.
+- Mengukur gap MRR SOFT terhadap ORACLE-W per skenario.
+- Mengambil 20 QID gagal secara acak-deterministik dan mengaudit empat indikator error tanpa menyalin teks klinis.
+
+File yang dibuat:
+- `scripts/run_stage10.py`, `scripts/verify_stage10.py`, dan `tests/test_stage10.py`.
+- `reports/10_analysis.md`, `reports/figures/10_question_type_performance.png`, dan `reports/figures/10_weight_distribution.png`.
+- Artefak privat di `results/stage10/`.
+
+Bukti verifikasi:
+- FINAL mengungguli B1 pada seluruh tipe; MRR tertinggi pada `tujuan_diet` (0,5014) dan kenaikan terbesar pada `pes` (+0,3027).
+- Median bobot QA adalah 0,9828 pada TPL dan turun menjadi 0,3028 pada PNEW.
+- Gap SOFT–ORACLE-W rata-rata 0,0788 dan terbesar pada PARA (0,1373).
+- Sebanyak 1.926/6.888 observasi memiliki rank FINAL >10; sampel 20 QID unik tidak memuat teks klinis.
+- Sepuluh hash lolos verifier, dua gambar 300 dpi diperiksa visual, dan 39 unit test lulus.
+
+Kriteria lolos:
+- [x] MRR dan RI tersedia untuk seluruh tipe pertanyaan.
+- [x] Distribusi bobot per skenario dan gap terhadap oracle dilaporkan.
+- [x] Dua puluh QA gagal dianalisis dengan kategori yang dapat direproduksi.
+- [x] Tidak ada teks klinis atau nama sumber masuk ke artefak Git.
+
 
 
 
